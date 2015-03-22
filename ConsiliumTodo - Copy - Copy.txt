@@ -1,0 +1,93 @@
+Environment resource requirements:
+	Software
+		IIS 7 (more probable) or 8 
+			http://technet.microsoft.com/en-us/library/cc268240.aspx
+		MVC (Version TBD)
+			MVC4 application is bin-deployable, no installation required on server.
+		.NET Framework 4+ (TBD)
+			http://msdn.microsoft.com/en-us/library/8z6watww.aspx
+		Potential third party libraries TBD
+			??
+		SQL Server (Could be relocated to a central server to be shared across environment specific machines - Database name delimited)
+			Some details about running a SQL Server on a VM
+				As with physical machines IO is king. There will be a noticeable IO hit from virtualisation (how much of a hit depends on the technology)
+				Always used fixed size, not dynamic virtual disks, and ensure that the underlying drives/arrays are sufficient. Dynamic vdisks are less performance than fixed size ones. 
+				If the data in the VMs is not mission critical, turn on the VM solutions ability to cache writes (effectively lying to the guest OS about when things are physically written to disk) for extra performance. This is useful for development and testing machine where the data is easily replaced, but it is recommended that such options stay off for production and backup systems.
+				Ensure that each VM has enough RAM dedicated to it such that the normal working set of each database fits into memory with a fair amount of room to spare to avoid unnecessary IO. Also, ensure that the hypervisor will not page out the VMs RAM at any time (for instance most VMWare products can do this, which allows you to run a larger set of VMs than you otherwise could on the same hardware, but the performance degradation can be massive - there is an option to tune or turn off this behaviour).
+				If the host uses RAID5 arrays, consider moving to RAID10. This will reduce the space available but remove the write performance problems that can be apparent with RAID5 (or 6).
+				For VMs that are likely to see a lot of IO activity, consider giving them their own drive or array, or only have them share their drive(s)/array(s) with data that sees low activity.
+				Of course if your entire DB (and everything else the VM is running) fits into the RAM allocated to the VM and it sees very little write activity, IO performance can be much less of an issue.
+				If using virtual disks make sure that the best controller type is used for performance. Some virtualisation solutions offer several virtual controller types for better guest compatibility and you might find some less efficient than others due to protocol limitations in the design they are emulating and limitations in the guest OS's drivers.
+				If your virtualisation solution offers specific drivers for the virtual drive controller, make sure your guest OS is using them - these can speed up bulk IO by reducing the number of memory-to-memory copies and host<->hypervisor<->guest context switches involved in some operations.
+				The two points above apply if you are using network storage such as simple SMB shares or iSCSI too: make sure that you are using the most efficient virtual network controller on offer and that your guest OS is using the recommended driver for it, otherwise both throughput and bandwidth may be more limited than needs be by the virtualisation layer.
+
+		
+	Development
+	QA
+	UAT 
+	Production 
+	
+	Build server 
+		(Hardware can be light for the application itself, but builds/unit test/code coverage items will consume memory and CPU)
+		Jenkins(Hudson fork) (Free)
+		TeamCity Professional Server License: 
+			Unlimited server instances
+			20 build configurations per server
+			3 build agents per server
+			Additional cost information: http://www.jetbrains.com/teamcity/buy/index.jsp
+	
+	Source Control Server
+		Subversion (Free)
+	
+Tools needed for developers:
+	MSDN information 
+		Subscription Level: Visual Studio Professional with MSDN
+		Initial Cost 1199 / Renewal 799
+	Visual Studio 2012 
+		Cost 499
+		SQL Server Express (Free) (Has limitations on size and resource use)
+	Source Control 
+		Subversion (Free)
+	Code Review
+		Review Assistant (http://www.devart.com/review-assistant/)
+			Free version limits:
+				3 users
+				1 project
+			10 Users - 249.95
+			25 Users - 499.95
+	PC requirements
+		TODO: Need desktop details...
+	Wiki 
+		Sharepoint server (Need version and location information)
+	Code Coverage
+		NCover 4
+			Desktop (per developer) - 658
+			Build server Collector - 448
+		
+Best practices, coding standards, developer responsibility 
+	Sprints
+	Code review
+		Review Assistant (http://www.devart.com/review-assistant/)
+	SQL documentation
+		Have documentation gathered, need a centralized location for storage.
+	Source control 
+		Subversion
+
+Database structure planning
+
+Development team hiring
+	
+
+Original Details:	
+	Provide Les with resource requirements for environments (e.g., Dev, QA)
+	Determine tools that will be needed for the developers (e.g., MSDN, PC requirements)
+	Document best practices, standards, responsibilities of developers on sprints, etc.
+	Begin working with Chris to understand Doc-It requirements in order to begin work on database
+	Begin working with Chris on hiring of development team
+	
+	Bandwidth/VPN
+	
+
+
+	
+	
