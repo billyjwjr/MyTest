@@ -2,7 +2,7 @@
 
 ## Process Details:
 
-![](/ODSCVImages/image001.png)
+![](../ODSCVImages/image001.png)
 
 **Step 1: SQL Script Deployment** - PowerShell script to deploy SQL scripts in the TeamCity package located in the coordinating source control folder that shares the github branch name.
 
@@ -31,7 +31,7 @@ The PowerShell script that is executed in this step resides in source in the fol
 ## Variable Definitions
 ##### Screenshot of Variable List:
 
-![](/ODSCVImages/image003.png)
+![](../ODSCVImages/image003.png)
 
 ##### Definitions:
 
